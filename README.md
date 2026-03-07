@@ -7,10 +7,11 @@ SDwC 서비스들의 통합 배포 및 인프라 관리.
 ```
 SDwC_projects/
 ├── SDwC/                  ← git repo (documentation generator)
-├── intake_assistant/      ← git repo (AI conversation → YAML)
+├── intake-assistant/      ← git repo (AI conversation → YAML)
 └── sdwc-platform/         ← git repo (이 레포: 통합 배포)
     ├── manifests/         # 서비스별 k8s 배포 매니페스트
-    │   └── sdwc/          # SDwC 서비스 매니페스트
+    │   ├── sdwc/          # SDwC 서비스 (sdwc-api, sdwc-web)
+    │   └── intake/        # intake-assistant 서비스 (api, web)
     ├── scripts/           # 배포/운영 스크립트
     ├── ingress/           # 통합 Ingress 매니페스트
     ├── argocd/            # ArgoCD Application 정의
@@ -37,14 +38,15 @@ SDwC_projects/
 ./scripts/status.sh
 
 # 특정 서비스만 리빌드
-./scripts/rebuild.sh sdwc-api
-./scripts/rebuild.sh intake
-./scripts/rebuild.sh all
+./scripts/rebuild.sh sdwc-api    # sdwc-api만
+./scripts/rebuild.sh sdwc        # sdwc-api + sdwc-web
+./scripts/rebuild.sh intake      # intake-api + intake-web
+./scripts/rebuild.sh all         # 전체
 
 # 로그 확인
-./scripts/logs.sh intake-api
-./scripts/logs.sh sdwc
-./scripts/logs.sh            # 전체
+./scripts/logs.sh sdwc-api       # 개별 서비스
+./scripts/logs.sh intake         # intake 전체
+./scripts/logs.sh                # 전체
 
 # 클러스터 삭제
 ./scripts/clean.sh
