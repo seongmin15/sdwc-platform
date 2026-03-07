@@ -38,7 +38,6 @@ helm repo update
 helm upgrade --install traefik traefik/traefik \
   --namespace kube-system \
   --skip-crds \
-  --set ports.web.nodePort=80 \
   --set service.type=LoadBalancer \
   --set providers.kubernetesIngress.publishedService.enabled=true \
   --set ingressRoute.dashboard.enabled=false \
