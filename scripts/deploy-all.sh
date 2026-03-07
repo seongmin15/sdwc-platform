@@ -72,8 +72,8 @@ kubectl apply -f "$PLATFORM_ROOT/manifests/sdwc/sdwc-api/deployment.yaml" -n sdw
 kubectl apply -f "$PLATFORM_ROOT/manifests/sdwc/sdwc-web/deployment.yaml" -n sdwc
 
 echo "☸️ Applying intake-assistant manifests..."
-kubectl apply -f "$INTAKE_DIR/infra/intake-assistant-api/deployment.yaml" -n intake
-kubectl apply -f "$INTAKE_DIR/infra/intake-assistant-web/deployment.yaml" -n intake
+kubectl apply -f "$PLATFORM_ROOT/manifests/intake/intake-assistant-api/deployment.yaml" -n intake
+kubectl apply -f "$PLATFORM_ROOT/manifests/intake/intake-assistant-web/deployment.yaml" -n intake
 
 echo "☸️ Applying platform ingress..."
 kubectl apply -f "$PLATFORM_ROOT/ingress/platform-ingress.yaml"
