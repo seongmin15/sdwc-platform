@@ -1,0 +1,101 @@
+# SDwC Platform — Unified Ingress
+# Host-based routing: sdwc.local / intake.local
+#
+# Prerequisites:
+#   Add to hosts file (C:\Windows\System32\drivers\etc\hosts or /etc/hosts):
+#   127.0.0.1 sdwc.local intake.local
+
+# --- SDwC API ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sdwc-api-ingress
+  namespace: sdwc
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.priority: "100"
+spec:
+  rules:
+    - host: sdwc.local
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: sdwc-api
+                port:
+                  number: 8000
+          - path: /health
+            pathType: Exact
+            backend:
+              service:
+                name: sdwc-api
+                port:
+                  number: 8000
+---
+# --- SDwC Web ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sdwc-web-ingress
+  namespace: sdwc
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.priority: "1"
+spec:
+  rules:
+    - host: sdwc.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sdwc-web
+                port:
+                  number: 80
+---
+# --- intake-assistant API ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: intake-api-ingress
+  namespace: intake
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.priority: "100"
+spec:
+  rules:
+    - host: intake.local
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: intake-assistant-api
+                port:
+                  number: 8000
+---
+# --- intake-assistant Web ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: intake-web-ingress
+  namespace: intake
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.priority: "1"
+spec:
+  rules:
+    - host: intake.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: intake-assistant-web
+                port:
+                  number: 80

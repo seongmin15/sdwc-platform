@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: intake-assistant
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/seongmin15/intake_assistant
+    targetRevision: main
+    path: infra
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: intake
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
