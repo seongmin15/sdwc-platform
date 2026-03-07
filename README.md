@@ -29,6 +29,25 @@ SDwC_projects/
   127.0.0.1 sdwc.local intake.local
   ```
 
+## 시크릿 설정
+
+배포 전 `.env.secrets` 파일을 프로젝트 루트에 생성하세요 (`.gitignore`에 포함됨):
+
+```bash
+cp .env.secrets.example .env.secrets
+# .env.secrets 파일에서 실제 API 키로 변경
+```
+
+```
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+```
+
+`deploy-all.sh`가 자동으로 이 파일을 읽어 K8s secret을 생성합니다. 또는 환경 변수로 직접 전달할 수도 있습니다:
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-... ./scripts/deploy-all.sh
+```
+
 ## 사용법
 
 ```bash

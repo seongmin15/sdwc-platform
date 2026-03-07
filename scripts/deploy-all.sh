@@ -49,6 +49,12 @@ kubectl create namespace sdwc 2>/dev/null || true
 kubectl create namespace intake 2>/dev/null || true
 
 # --- Secrets ---
+# Load from .env.secrets if exists and env var not already set
+if [ -z "$ANTHROPIC_API_KEY" ] && [ -f "$PLATFORM_ROOT/.env.secrets" ]; then
+  echo "🔑 Loading secrets from .env.secrets..."
+  source "$PLATFORM_ROOT/.env.secrets"
+fi
+
 if [ -n "$ANTHROPIC_API_KEY" ]; then
   echo "🔑 Creating intake-secrets..."
   kubectl create secret generic intake-secrets \
