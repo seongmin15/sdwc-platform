@@ -48,6 +48,18 @@ echo "📁 Creating namespaces..."
 kubectl create namespace sdwc 2>/dev/null || true
 kubectl create namespace intake 2>/dev/null || true
 
+# --- Secrets ---
+if [ -n "$ANTHROPIC_API_KEY" ]; then
+  echo "🔑 Creating intake-secrets..."
+  kubectl create secret generic intake-secrets \
+    -n intake \
+    --from-literal=anthropic-api-key="$ANTHROPIC_API_KEY" \
+    --dry-run=client -o yaml | kubectl apply -f -
+else
+  echo "⚠️  ANTHROPIC_API_KEY not set. Skipping secret creation."
+  echo "   Run: ANTHROPIC_API_KEY=sk-ant-... ./scripts/deploy-all.sh"
+fi
+
 # --- Images ---
 SDWC_API_IMAGE="ghcr.io/seongmin15/sdwc/sdwc-api:latest"
 SDWC_WEB_IMAGE="ghcr.io/seongmin15/sdwc/sdwc-web:latest"
