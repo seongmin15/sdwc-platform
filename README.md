@@ -9,6 +9,8 @@ SDwC_projects/
 ├── SDwC/                  ← git repo (documentation generator)
 ├── intake_assistant/      ← git repo (AI conversation → YAML)
 └── sdwc-platform/         ← git repo (이 레포: 통합 배포)
+    ├── manifests/         # 서비스별 k8s 배포 매니페스트
+    │   └── sdwc/          # SDwC 서비스 매니페스트
     ├── scripts/           # 배포/운영 스크립트
     ├── ingress/           # 통합 Ingress 매니페스트
     ├── argocd/            # ArgoCD Application 정의

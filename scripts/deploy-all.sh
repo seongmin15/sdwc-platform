@@ -68,8 +68,8 @@ k3d image import \
 
 # --- Manifests ---
 echo "☸️ Applying SDwC manifests..."
-kubectl apply -f "$SDWC_DIR/infra/sdwc-api/deployment.yaml" -n sdwc
-kubectl apply -f "$SDWC_DIR/infra/sdwc-web/deployment.yaml" -n sdwc
+kubectl apply -f "$PLATFORM_ROOT/manifests/sdwc/sdwc-api/deployment.yaml" -n sdwc
+kubectl apply -f "$PLATFORM_ROOT/manifests/sdwc/sdwc-web/deployment.yaml" -n sdwc
 
 echo "☸️ Applying intake-assistant manifests..."
 kubectl apply -f "$INTAKE_DIR/infra/intake-assistant-api/deployment.yaml" -n intake

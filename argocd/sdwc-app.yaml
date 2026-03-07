@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/seongmin15/SDwC
+    repoURL: https://github.com/seongmin15/sdwc-platform
     targetRevision: main
-    path: infra
+    path: manifests/sdwc
   destination:
     server: https://kubernetes.default.svc
     namespace: sdwc
