@@ -37,9 +37,12 @@ helm repo add traefik https://traefik.github.io/charts 2>/dev/null || true
 helm repo update
 helm upgrade --install traefik traefik/traefik \
   --namespace kube-system \
+  --skip-crds \
   --set ports.web.nodePort=80 \
   --set service.type=LoadBalancer \
-  --wait 2>/dev/null || echo "Traefik already installed or Helm not available, using built-in"
+  --set providers.kubernetesIngress.publishedService.enabled=true \
+  --set ingressRoute.dashboard.enabled=false \
+  --wait || { echo "❌ Traefik installation failed"; exit 1; }
 
 # --- Namespaces ---
 echo "📁 Creating namespaces..."

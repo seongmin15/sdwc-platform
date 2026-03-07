@@ -23,6 +23,7 @@ SDwC_projects/
 - Docker Desktop (WSL2 backend)
 - [k3d](https://k3d.io/#installation)
 - kubectl
+- [Helm](https://helm.sh/docs/intro/install/) — Traefik Ingress Controller 설치에 필요
 - hosts 파일에 추가:
   ```
   127.0.0.1 sdwc.local intake.local
