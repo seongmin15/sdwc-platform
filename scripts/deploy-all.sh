@@ -46,7 +46,7 @@ helm upgrade --install traefik traefik/traefik \
 # --- ArgoCD ---
 echo "📦 Installing ArgoCD..."
 kubectl create namespace argocd 2>/dev/null || true
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 echo "⏳ Waiting for ArgoCD to be ready..."
 kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=argocd-server -n argocd --timeout=180s
 
