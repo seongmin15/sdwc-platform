@@ -2,3 +2,5 @@
 *.swp
 *.swo
 .env.secrets
+certs/
+scripts/mkcert.exe

@@ -18,7 +18,8 @@ metadata:
 spec:
   ingressClassName: traefik
   tls:
-    - hosts:
+    - secretName: platform-tls
+      hosts:
         - sdwc.local
   rules:
     - host: sdwc.local
@@ -52,7 +53,8 @@ metadata:
 spec:
   ingressClassName: traefik
   tls:
-    - hosts:
+    - secretName: platform-tls
+      hosts:
         - sdwc.local
   rules:
     - host: sdwc.local
@@ -79,7 +81,8 @@ metadata:
 spec:
   ingressClassName: traefik
   tls:
-    - hosts:
+    - secretName: platform-tls
+      hosts:
         - intake.local
   rules:
     - host: intake.local
@@ -106,7 +109,8 @@ metadata:
 spec:
   ingressClassName: traefik
   tls:
-    - hosts:
+    - secretName: platform-tls
+      hosts:
         - intake.local
   rules:
     - host: intake.local

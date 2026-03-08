@@ -48,6 +48,25 @@ echo "📁 Creating namespaces..."
 kubectl create namespace sdwc 2>/dev/null || true
 kubectl create namespace intake 2>/dev/null || true
 
+# --- TLS Certificates ---
+TLS_CERT="$PLATFORM_ROOT/certs/sdwc.local+3.pem"
+TLS_KEY="$PLATFORM_ROOT/certs/sdwc.local+3-key.pem"
+
+if [ -f "$TLS_CERT" ] && [ -f "$TLS_KEY" ]; then
+  echo "🔒 Creating TLS secrets from mkcert certificates..."
+  kubectl create secret tls platform-tls \
+    -n sdwc \
+    --cert="$TLS_CERT" --key="$TLS_KEY" \
+    --dry-run=client -o yaml | kubectl apply -f -
+  kubectl create secret tls platform-tls \
+    -n intake \
+    --cert="$TLS_CERT" --key="$TLS_KEY" \
+    --dry-run=client -o yaml | kubectl apply -f -
+else
+  echo "⚠️  TLS certificates not found. Run: scripts/mkcert.exe sdwc.local intake.local localhost 127.0.0.1"
+  echo "   (from the certs/ directory)"
+fi
+
 # --- Secrets ---
 # Load from .env.secrets if exists and env var not already set
 if [ -z "$ANTHROPIC_API_KEY" ] && [ -f "$PLATFORM_ROOT/.env.secrets" ]; then
