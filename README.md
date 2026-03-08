@@ -68,6 +68,14 @@ ANTHROPIC_API_KEY=sk-ant-... ./scripts/deploy-all.sh
 ./scripts/logs.sh intake         # intake 전체
 ./scripts/logs.sh                # 전체
 
+# ArgoCD 관리
+./scripts/argocd.sh status    # 상태 확인
+./scripts/argocd.sh restart   # 재시작
+./scripts/argocd.sh password  # admin 비밀번호
+./scripts/argocd.sh ui        # 웹 UI (localhost:8080)
+./scripts/argocd.sh sync      # 전체 앱 동기화
+./scripts/argocd.sh sync sdwc # 특정 앱 동기화
+
 # 클러스터 삭제
 ./scripts/clean.sh
 ```
