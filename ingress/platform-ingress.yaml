@@ -12,10 +12,14 @@ metadata:
   name: sdwc-api-ingress
   namespace: sdwc
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.priority: "100"
 spec:
   ingressClassName: traefik
+  tls:
+    - hosts:
+        - sdwc.local
   rules:
     - host: sdwc.local
       http:
@@ -42,10 +46,14 @@ metadata:
   name: sdwc-web-ingress
   namespace: sdwc
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.priority: "1"
 spec:
   ingressClassName: traefik
+  tls:
+    - hosts:
+        - sdwc.local
   rules:
     - host: sdwc.local
       http:
@@ -65,10 +73,14 @@ metadata:
   name: intake-api-ingress
   namespace: intake
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.priority: "100"
 spec:
   ingressClassName: traefik
+  tls:
+    - hosts:
+        - intake.local
   rules:
     - host: intake.local
       http:
@@ -88,10 +100,14 @@ metadata:
   name: intake-web-ingress
   namespace: intake
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.priority: "1"
 spec:
   ingressClassName: traefik
+  tls:
+    - hosts:
+        - intake.local
   rules:
     - host: intake.local
       http:

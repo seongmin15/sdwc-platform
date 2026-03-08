@@ -26,7 +26,7 @@ done
 # --- Cluster ---
 echo "🚀 Creating k3d cluster..."
 k3d cluster create $CLUSTER_NAME \
-  -p "8080:80@loadbalancer" \
+  -p "8443:443@loadbalancer" \
   --k3s-arg "--disable=traefik@server:0" \
   || echo "Cluster already exists"
 
@@ -108,8 +108,8 @@ echo ""
 echo "✅ Deployment complete!"
 echo ""
 echo "📍 Access:"
-echo "  SDwC:             http://sdwc.local:8080"
-echo "  intake-assistant: http://intake.local:8080"
+echo "  SDwC:             https://sdwc.local:8443"
+echo "  intake-assistant: https://intake.local:8443"
 echo ""
 echo "💡 Add to /etc/hosts (or C:\\Windows\\System32\\drivers\\etc\\hosts):"
 echo "  127.0.0.1 sdwc.local intake.local"

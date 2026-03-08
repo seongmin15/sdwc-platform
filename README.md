@@ -76,15 +76,15 @@ ANTHROPIC_API_KEY=sk-ant-... ./scripts/deploy-all.sh
 
 | 서비스 | URL |
 |--------|-----|
-| SDwC Web | http://sdwc.local:8080 |
-| SDwC API | http://sdwc.local:8080/api/v1/template |
-| intake-assistant Web | http://intake.local:8080 |
-| intake-assistant API | http://intake.local:8080/api/v1/health |
+| SDwC Web | https://sdwc.local:8443 |
+| SDwC API | https://sdwc.local:8443/api/v1/template |
+| intake-assistant Web | https://intake.local:8443 |
+| intake-assistant API | https://intake.local:8443/api/v1/health |
 
 ## 서비스 간 통신
 
 intake-assistant → SDwC API는 클러스터 내부 DNS로 통신:
 
 ```
-http://sdwc-api.sdwc.svc.cluster.local:8000
+http://sdwc-api.sdwc.svc.cluster.local:8000  (cluster-internal, TLS terminates at ingress)
 ```
