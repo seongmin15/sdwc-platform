@@ -88,3 +88,60 @@ intake-assistant → SDwC API는 클러스터 내부 DNS로 통신:
 ```
 http://sdwc-api.sdwc.svc.cluster.local:8000  (cluster-internal, TLS terminates at ingress)
 ```
+
+## ArgoCD (GitOps)
+
+`deploy-all.sh`가 ArgoCD를 자동으로 설치하고, `argocd/` 디렉토리의 Application 정의를 적용합니다.
+
+### 구성
+
+| Application | Git Path | Namespace |
+|-------------|----------|-----------|
+| `sdwc` | `manifests/sdwc` | sdwc |
+| `intake-assistant` | `manifests/intake` | intake |
+
+두 앱 모두 **자동 동기화**가 설정되어 있습니다:
+- **Automated Sync** — `main` 브랜치에 push하면 자동 배포
+- **Self-Heal** — 수동 변경 시 Git 상태로 자동 복원
+- **Prune** — Git에서 삭제된 리소스는 클러스터에서도 삭제
+
+### 상태 확인
+
+```bash
+# ArgoCD 앱 상태
+kubectl get applications -n argocd
+
+# ArgoCD 파드 상태
+kubectl get pods -n argocd
+```
+
+### 웹 UI 접속
+
+```bash
+# 포트 포워딩
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+```
+
+브라우저에서 `https://localhost:8080` 접속.
+
+```bash
+# 초기 admin 비밀번호 확인
+kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
+```
+
+- **Username:** `admin`
+- **Password:** 위 명령어 출력값
+
+### ArgoCD CLI (선택)
+
+```bash
+# CLI 설치 후 로그인
+argocd login localhost:8080 --username admin --password $(kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d) --insecure
+
+# 앱 목록
+argocd app list
+
+# 수동 동기화
+argocd app sync sdwc
+argocd app sync intake-assistant
+```
