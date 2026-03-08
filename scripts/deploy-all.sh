@@ -43,6 +43,13 @@ helm upgrade --install traefik traefik/traefik \
   --set ingressRoute.dashboard.enabled=false \
   --wait || { echo "❌ Traefik installation failed"; exit 1; }
 
+# --- ArgoCD ---
+echo "📦 Installing ArgoCD..."
+kubectl create namespace argocd 2>/dev/null || true
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+echo "⏳ Waiting for ArgoCD to be ready..."
+kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=argocd-server -n argocd --timeout=180s
+
 # --- Namespaces ---
 echo "📁 Creating namespaces..."
 kubectl create namespace sdwc 2>/dev/null || true
@@ -104,6 +111,11 @@ k3d image import \
   $SDWC_API_IMAGE $SDWC_WEB_IMAGE \
   $INTAKE_API_IMAGE $INTAKE_WEB_IMAGE \
   -c $CLUSTER_NAME
+
+# --- ArgoCD Applications ---
+echo "☸️ Applying ArgoCD applications..."
+kubectl apply -f "$PLATFORM_ROOT/argocd/sdwc-app.yaml"
+kubectl apply -f "$PLATFORM_ROOT/argocd/intake-app.yaml"
 
 # --- Manifests ---
 echo "☸️ Applying SDwC manifests..."
